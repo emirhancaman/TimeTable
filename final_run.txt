@@ -1,0 +1,43 @@
+﻿Launching lib\main.dart on 2209116AG in debug mode...
+Running Gradle task 'assembleDebug'...                          
+flutter : 
+At line:1 char:78
++ ... ium\jdk-17.0.17.10-hotspot"; f
+lutter run -d 954810aa0013 2>&1 | Ou
+t-F ...
++                                  ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSp 
+   ecified: (:String) [], RemoteEx  
+  ception
+    + FullyQualifiedErrorId : Nativ 
+   eCommandError
+ 
+FAILURE: Build failed with an except
+ion.
+
+* What went wrong:
+Gradle could not start your build.
+> Could not create service of type C
+hecksumService using CoreBuildSessio
+nServices.createChecksumService().
+   > Cannot lock checksums cache (C:
+\Users\emirh\OneDrive\Masa´┐¢st´┐¢\T
+imeTable\android\.gradle\8.14\checks
+ums) as it has already been locked b
+y this process.
+
+* Try:
+> Run with --stacktrace option to ge
+t the stack trace.
+> Run with --info or --debug option 
+to get more log output.
+> Run with --scan to get full insigh
+ts.
+> Get more help at https://help.grad
+le.org.
+
+BUILD FAILED in 1s
+Running Gradle task 'assembleDebug'...                           1.281ms
+Error: Gradle task assembleDebug fai
+led with exit code 1

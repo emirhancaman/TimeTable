@@ -1,0 +1,311 @@
+﻿[ +201 ms] Artifact Instance of 'MaterialFonts' is not required, skipping update.
+[        ] Artifact Instance of 'GradleWrapper' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidGenSnapshotArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterWebSdk' is not required, skipping update.
+[        ] Artifact Instance of 'LegacyCanvasKitRemover' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterSdk' is not required, skipping update.
+[        ] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FontSubsetArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'PubDependencies' is not required, skipping update.
+[        ] executing: [C:\coding\flutter_windows_3.38.9-stable\flutter/] git -c log.showSignature=false log HEAD -n 1 --pretty=format:%ad --date=iso
+[  +50 ms] Exit code 0 from: git -c log.showSignature=false log HEAD -n 1 --pretty=format:%ad --date=iso
+[        ] 2026-01-28 13:43:12 -0800
+[   +8 ms] Artifact Instance of 'AndroidGenSnapshotArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterWebSdk' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterEngineStamp' is not required, skipping update.
+[        ] Artifact Instance of 'LegacyCanvasKitRemover' is not required, skipping update.
+[   +1 ms] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[  +26 ms] Artifact Instance of 'MaterialFonts' is not required, skipping update.
+[        ] Artifact Instance of 'GradleWrapper' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidGenSnapshotArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'AndroidInternalBuildArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterEngineStamp' is not required, skipping update.
+[   +6 ms] Artifact Instance of 'FlutterSdk' is not required, skipping update.
+[        ] Artifact Instance of 'WindowsEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxEngineArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'LinuxFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'MacOSFuchsiaSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerSDKArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FlutterRunnerDebugSymbols' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'IosUsbArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'FontSubsetArtifacts' is not required, skipping update.
+[        ] Artifact Instance of 'PubDependencies' is not required, skipping update.
+[   +8 ms] Skipping pub get: version match.
+[  +54 ms] Found plugin path_provider at C:\Users\emirh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider-2.1.5\
+[   +2 ms] Found plugin path_provider_windows at C:\Users\emirh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_windows-2.3.0\
+[   +5 ms] Found plugin path_provider_linux at C:\Users\emirh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_linux-2.2.1\
+[   +2 ms] Found plugin path_provider_foundation at C:\Users\emirh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_foundation-2.6.0\
+[   +8 ms] Found plugin path_provider_android at C:\Users\emirh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_android-2.2.22\
+[  +47 ms] Found plugin path_provider at C:\Users\emirh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider-2.1.5\
+[   +2 ms] Found plugin path_provider_windows at C:\Users\emirh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_windows-2.3.0\
+[   +3 ms] Found plugin path_provider_linux at C:\Users\emirh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_linux-2.2.1\
+[   +1 ms] Found plugin path_provider_foundation at C:\Users\emirh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_foundation-2.6.0\
+[   +8 ms] Found plugin path_provider_android at C:\Users\emirh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_android-2.2.22\
+[   +9 ms] Skipping generating web_plugin_registrant.dart because it is up-to-date.
+[  +26 ms] Found plugin path_provider at C:\Users\emirh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider-2.1.5\
+[        ] Found plugin path_provider_windows at C:\Users\emirh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_windows-2.3.0\
+[   +3 ms] Found plugin path_provider_linux at C:\Users\emirh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_linux-2.2.1\
+[   +1 ms] Found plugin path_provider_foundation at C:\Users\emirh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_foundation-2.6.0\
+[   +6 ms] Found plugin path_provider_android at C:\Users\emirh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_android-2.2.22\
+[   +5 ms] Generating C:\Users\emirh\OneDrive\Masa├╝st├╝\TimeTable\android\app\src\main\java\io\flutter\plugins\GeneratedPluginRegistrant.java
+[   +2 ms] Skipping generating GeneratedPluginRegistrant.java because it is up-to-date.
+[   +1 ms] Skipping generating GeneratedPluginRegistrant.h because it is up-to-date.
+[        ] Skipping generating GeneratedPluginRegistrant.m because it is up-to-date.
+[  +64 ms] Found plugin path_provider at C:\Users\emirh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider-2.1.5\
+[        ] Found plugin path_provider_windows at C:\Users\emirh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_windows-2.3.0\
+[   +3 ms] Found plugin path_provider_linux at C:\Users\emirh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_linux-2.2.1\
+[   +1 ms] Found plugin path_provider_foundation at C:\Users\emirh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_foundation-2.6.0\
+[   +4 ms] Found plugin path_provider_android at C:\Users\emirh\AppData\Local\Pub\Cache\hosted\pub.dev\path_provider_android-2.2.22\
+[   +4 ms] generated_plugin_registrant.dart not found. Skipping.
+[        ] Compiling lib\main.dart for the Web...
+[   +6 ms] Initializing file store
+[   +6 ms] Done initializing file store
+[  +36 ms] Skipping target: web_entrypoint
+[   +1 ms] invalidated build due to missing files: C:\Users\emirh\OneDrive\Masa├╝st├╝\TimeTable\web\*\index.html, C:\Users\emirh\OneDrive\Masa├╝st├╝\TimeTable\web\flutter_bootstrap.js
+[   +1 ms] Skipping target: dart_build
+[        ] Skipping target: gen_localizations
+[   +1 ms] web_templated_files: Starting due to {InvalidatedReasonKind.outputMissing: The following outputs were missing: C:\Users\emirh\OneDrive\Masa├╝st├╝\TimeTable\build\web\*\index.html, InvalidatedReasonKind.inputMissing: The following inputs were missing: C:\Users\emirh\OneDrive\Masa├╝st├╝\TimeTable\web\*\index.html,C:\Users\emirh\OneDrive\Masa├╝st├╝\TimeTable\web\flutter_bootstrap.js}
+[        ] web_static_assets: Starting due to {InvalidatedReasonKind.outputMissing: The following outputs were missing: C:\Users\emirh\OneDrive\Masa├╝st├╝\TimeTable\.dart_tool\flutter_build\dede4ec3cac864665fd9d73b319dcc82\flutter.js,C:\Users\emirh\OneDrive\Masa├╝st├╝\TimeTable\.dart_tool\flutter_build\dede4ec3cac864665fd9d73b319dcc82\canvaskit\canvaskit.js,C:\Users\emirh\OneDrive\Masa├╝st├╝\TimeTable\.dart_tool\flutter_build\dede4ec3cac864665fd9d73b319dcc82\canvaskit\canvaskit.js.symbols,C:\Users\emirh\OneDrive\Masa├╝st├╝\TimeTable\.dart_tool\flutter_build\dede4ec3cac864665fd9d73b319dcc82\canvaskit\canvaskit.wasm,C:\Users\emirh\OneDrive\Masa├╝st├╝\TimeTable\.dart_tool\flutter_build\dede4ec3cac864665fd9d73b319dcc82\canvaskit\chromium\canvaskit.js,C:\Users\emirh\OneDrive\Masa├╝st├╝\TimeTable\.dart_tool\flutter_build\dede4ec3cac864665fd9d73b319dcc82\canvaskit\chromium\canvaskit.js.symbols,C:\Users\emirh\OneDrive\Masa├╝st├╝\TimeTable\.dart_tool\flutter_build\dede4ec3cac864665fd9d73b319dcc82\canvaskit\chromium\canvaskit.wasm,C:\Users\emirh\OneDrive\Masa├╝st├╝\TimeTable\.dart_tool\flutter_build\dede4ec3cac864665fd9d73b319dcc82\canvaskit\skwasm.js,C:\Users\emirh\OneDrive\Masa├╝st├╝\TimeTable\.dart_tool\flutter_build\dede4ec3cac864665fd9d73b319dcc82\canvaskit\skwasm.js.symbols,C:\Users\emirh\OneDrive\Masa├╝st├╝\TimeTable\.dart_tool\flutter_build\dede4ec3cac864665fd9d73b319dcc82\canvaskit\skwasm.wasm,C:\Users\emirh\OneDrive\Masa├╝st├╝\TimeTable\.dart_tool\flutter_build\dede4ec3cac864665fd9d73b319dcc82\canvaskit\skwasm_heavy.js,C:\Users\emirh\OneDrive\Masa├╝st├╝\TimeTable\.dart_tool\flutter_build\dede4ec3cac864665fd9d73b319dcc82\canvaskit\skwasm_heavy.js.symbols,C:\Users\emirh\OneDrive\Masa├╝st├╝\TimeTable\.dart_tool\flutter_build\dede4ec3cac864665fd9d73b319dcc82\canvaskit\skwasm_heavy.wasm}
+[ +421 ms] Skipping target: dart2js
+[   +2 ms] web_static_assets: Complete
+[   +3 ms] dart2wasm: Starting due to {}
+[   +4 ms] executing: C:\coding\flutter_windows_3.38.9-stable\flutter\bin\cache\dart-sdk\bin\dart.exe compile wasm --packages=C:\Users\emirh\OneDrive\Masa├╝st├╝\TimeTable\.dart_tool\package_config.json --extra-compiler-option=--platform=C:\coding\flutter_windows_3.38.9-stable\flutter\bin\cache\flutter_web_sdk\kernel\dart2wasm_platform.dill -Ddart.vm.profile=false -Ddart.vm.product=true --extra-compiler-option=--delete-tostring-package-uri=dart:ui --extra-compiler-option=--delete-tostring-package-uri=package:flutter --extra-compiler-option=--import-shared-memory --extra-compiler-option=--shared-memory-max-pages=32768 -DFLUTTER_VERSION=3.38.9 -DFLUTTER_CHANNEL=stable -DFLUTTER_GIT_URL=https://github.com/flutter/flutter.git -DFLUTTER_FRAMEWORK_REVISION=67323de285 -DFLUTTER_ENGINE_REVISION=587c18f873 -DFLUTTER_DART_VERSION=3.10.8 -DFLUTTER_WEB_USE_SKIA=false -DFLUTTER_WEB_USE_SKWASM=true -DFLUTTER_WEB_CANVASKIT_URL=https://www.gstatic.com/flutter-canvaskit/587c18f873b8ab57330422bce09047420d9c7f42/ --extra-compiler-option=--depfile=C:\Users\emirh\OneDrive\Masa├╝st├╝\TimeTable\.dart_tool\flutter_build\dede4ec3cac864665fd9d73b319dcc82\dart2wasm.d -O2 --strip-wasm --no-source-maps --minify --extra-compiler-option=--dry-run -o C:\Users\emirh\OneDrive\Masa├╝st├╝\TimeTable\.dart_tool\flutter_build\dede4ec3cac864665fd9d73b319dcc82\main.dart.wasm C:\Users\emirh\OneDrive\Masa├╝st├╝\TimeTable\.dart_tool\flutter_build\dede4ec3cac864665fd9d73b319dcc82\main.dart
+[  +16 ms] web_templated_files: Complete
+flutter : [+23991 ms] Wasm dry run s
+ucceeded. Consider building and test
+ing your application with the `--was
+m` flag. See docs for more info: htt
+ps://docs.flutter.dev/platform-integ
+ration/web/wasm
+At line:1 char:1
++ flutter build web --verbose 2>&1 |
+ Out-File -FilePath web_build.txt - 
+...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSp 
+   ecified: ([+23991 ms] Was...rat  
+  ion/web/wasm:String) [], Remote   
+ Exception
+    + FullyQualifiedErrorId : Nativ 
+   eCommandError
+ 
+[        ] Use --no-wasm-dry-run to 
+disable these warnings.
+[   +1 ms] dart2wasm: Complete
+[   +1 ms] web_release_bundle: Starting due to {}
+[  +65 ms] shaderc command: [C:\coding\flutter_windows_3.38.9-stable\flutter\bin\cache\artifacts\engine\windows-x64\impellerc.exe, --sksl, --iplr, --json, --sl=C:\Users\emirh\OneDrive\Masa├╝st├╝\TimeTable\build\web\assets\shaders/ink_sparkle.frag, --spirv=C:\Users\emirh\OneDrive\Masa├╝st├╝\TimeTable\build\web\assets\shaders/ink_sparkle.frag.spirv, --input=C:\coding\flutter_windows_3.38.9-stable\flutter\packages\flutter\lib\src\material\shaders\ink_sparkle.frag, --input-type=frag, --include=C:\coding\flutter_windows_3.38.9-stable\flutter\packages\flutter\lib\src\material\shaders, --include=C:\coding\flutter_windows_3.38.9-stable\flutter\bin\cache\artifacts\engine\windows-x64\shader_lib]
+[        ] shaderc command: [C:\coding\flutter_windows_3.38.9-stable\flutter\bin\cache\artifacts\engine\windows-x64\impellerc.exe, --sksl, --iplr, --json, --sl=C:\Users\emirh\OneDrive\Masa├╝st├╝\TimeTable\build\web\assets\shaders/stretch_effect.frag, --spirv=C:\Users\emirh\OneDrive\Masa├╝st├╝\TimeTable\build\web\assets\shaders/stretch_effect.frag.spirv, --input=C:\coding\flutter_windows_3.38.9-stable\flutter\packages\flutter\lib\src\material\shaders\stretch_effect.frag, --input-type=frag, --include=C:\coding\flutter_windows_3.38.9-stable\flutter\packages\flutter\lib\src\material\shaders, --include=C:\coding\flutter_windows_3.38.9-stable\flutter\bin\cache\artifacts\engine\windows-x64\shader_lib]
+[+5691 ms] Running command: C:\coding\flutter_windows_3.38.9-stable\flutter\bin\cache\dart-sdk\bin\dart.exe C:\coding\flutter_windows_3.38.9-stable\flutter\bin\cache\artifacts\engine\windows-x64\const_finder.dart.snapshot --kernel-file C:\Users\emirh\OneDrive\Masa├╝st├╝\TimeTable\.dart_tool\flutter_build\dede4ec3cac864665fd9d73b319dcc82\app.dill --class-library-uri package:flutter/src/widgets/icon_data.dart --class-name IconData --annotation-class-name _StaticIconProvider --annotation-class-library-uri package:flutter/src/widgets/icon_data.dart
+[ +101 ms] Could not write file to C
+:\Users\emirh\OneDrive\Masa├╝st├╝\Ti
+meTable\build\web\assets\shaders/ink
+_sparkle.frag
+
+[        ] Could not write file to C
+:\Users\emirh\OneDrive\Masa├╝st├╝\Ti
+meTable\build\web\assets\shaders/str
+etch_effect.frag
+
+[ +906 ms] Expected to find fontFamily for constant IconData with codepoint: 128842.0, but found fontFamily: null. This usually means you are relying on the system font. Alternatively, font families in an IconData class can be provided in the assets section of your pubspec.yaml, or you are missing "uses-material-design: true".
+[        ] Expected to find fontFamily for constant IconData with codepoint: 9658.0, but found fontFamily: null. This usually means you are relying on the system font. Alternatively, font families in an IconData class can be provided in the assets section of your pubspec.yaml, or you are missing "uses-material-design: true".
+[   +1 ms] Running font-subset: C:\coding\flutter_windows_3.38.9-stable\flutter\bin\cache\artifacts\engine\windows-x64\font-subset.exe C:\Users\emirh\OneDrive\Masa├╝st├╝\TimeTable\build\web\assets\packages/cupertino_icons/assets/CupertinoIcons.ttf C:\Users\emirh\AppData\Local\Pub\Cache\hosted\pub.dev\cupertino_icons-1.0.8\assets\CupertinoIcons.ttf, using codepoints 62468 62730 62717 62419 62415 62629 62318 optional:32
+[        ] Running font-subset: C:\coding\flutter_windows_3.38.9-stable\flutter\bin\cache\artifacts\engine\windows-x64\font-subset.exe C:\Users\emirh\OneDrive\Masa├╝st├╝\TimeTable\build\web\assets\fonts/MaterialIcons-Regular.otf C:\coding\flutter_windows_3.38.9-stable\flutter\bin\cache\artifacts\material_fonts\MaterialIcons-Regular.otf, using codepoints 983699 983698 62775 57490 62832 57706 58332 57502 57501 57496 57694 57695 57657 57882 57504 61453 57634 57498 57926 57704 57491 61061 61060 62834 62833 59283 59282 57499 57500 61069 61068 62842 62841 59291 59290 58011 58012 61575 61576 63348 63349 59797 59798 58372 58370 61930 61927 63708 63705 60157 60154 58771 58189 62328 61752 983402 63526 60555 59975 58814 58813 57846 57862 58727 57686 61764 57402 63127 63030 63035 63047 62974 optional:32
+[ +102 ms] Font asset "CupertinoIcons.ttf" was tree-shaken, reducing it from 257628 to 1472 bytes (99.4% reduction). Tree-shaking can be disabled by providing the --no-tree-shake-icons flag when building your app.
+[   +3 ms] Font asset "MaterialIcons-Regular.otf" was tree-shaken, reducing it from 1645184 to 8704 bytes (99.5% reduction). Tree-shaking can be disabled by providing the --no-tree-shake-icons flag when building your app.
+[        ] Persisting file store
+[   +5 ms] Done persisting file store
+[   +8 ms] Target web_release_bundle
+ failed: ShaderCompilerException: Sh
+ader compilation of "C:\coding\flutt
+er_windows_3.38.9-stable\flutter\pac
+kages\flutter\lib\src\material\shade
+rs\ink_sparkle.frag" to "C:\Users\em
+irh\OneDrive\Masa├╝st├╝\TimeTable\bu
+ild\web\assets\shaders/ink_sparkle.f
+rag" failed with exit code 1.
+           impellerc stdout:
+
+           impellerc stderr:
+           Could not write file to C
+:\Users\emirh\OneDrive\Masa├╝st├╝\Ti
+meTable\build\web\assets\shaders/ink
+_sparkle.frag
+
+
+
+           #0      ShaderCompiler.co
+mpileShader (package:flutter_tools/s
+rc/build_system/tools/shader_compile
+r.dart:196:9)
+           <asynchronous suspension>
+           #1      copyAssets.<anony
+mous closure> (package:flutter_tools
+/src/build_system/targets/assets.dar
+t:157:25)
+           <asynchronous suspension>
+           #2      Future.wait.<anon
+ymous closure> (dart:async/future.da
+rt:546:21)
+           <asynchronous suspension>
+           #3      copyAssets (packa
+ge:flutter_tools/src/build_system/ta
+rgets/assets.dart:111:3)
+           <asynchronous suspension>
+           #4      WebReleaseBundle.
+build (package:flutter_tools/src/bui
+ld_system/targets/web.dart:528:29)
+           <asynchronous suspension>
+           #5      _BuildInstance._i
+nvokeInternal (package:flutter_tools
+/src/build_system/build_system.dart:
+895:9)
+           <asynchronous suspension>
+           #6      Future.wait.<anon
+ymous closure> (dart:async/future.da
+rt:546:21)
+           <asynchronous suspension>
+           #7      _BuildInstance.in
+vokeTarget (package:flutter_tools/sr
+c/build_system/build_system.dart:833
+:32)
+           <asynchronous suspension>
+           #8      FlutterBuildSyste
+m.build (package:flutter_tools/src/b
+uild_system/build_system.dart:653:16
+)
+           <asynchronous suspension>
+           #9      WebBuilder.buildW
+eb (package:flutter_tools/src/web/co
+mpile.dart:94:34)
+           <asynchronous suspension>
+           #10     BuildWebCommand.r
+unCommand (package:flutter_tools/src
+/commands/build_web.dart:296:5)
+           <asynchronous suspension>
+           #11     FlutterCommand.ru
+n.<anonymous closure> (package:flutt
+er_tools/src/runner/flutter_command.
+dart:1559:27)
+           <asynchronous suspension>
+           #12     AppContext.run.<a
+nonymous closure> (package:flutter_t
+ools/src/base/context.dart:154:19)
+           <asynchronous suspension>
+           #13     CommandRunner.run
+Command (package:args/command_runner
+.dart:212:13)
+           <asynchronous suspension>
+           #14     FlutterCommandRun
+ner.runCommand.<anonymous closure> (
+package:flutter_tools/src/runner/flu
+tter_command_runner.dart:487:9)
+           <asynchronous suspension>
+           #15     AppContext.run.<a
+nonymous closure> (package:flutter_t
+ools/src/base/context.dart:154:19)
+           <asynchronous suspension>
+           #16     FlutterCommandRun
+ner.runCommand (package:flutter_tool
+s/src/runner/flutter_command_runner.
+dart:422:5)
+           <asynchronous suspension>
+           #17     run.<anonymous cl
+osure>.<anonymous closure> (package:
+flutter_tools/runner.dart:104:11)
+           <asynchronous suspension>
+           #18     AppContext.run.<a
+nonymous closure> (package:flutter_t
+ools/src/base/context.dart:154:19)
+           <asynchronous suspension>
+           #19     main (package:flu
+tter_tools/executable.dart:103:3)
+           <asynchronous suspension>
+
+[   +5 ms] Compiling lib\main.dart for the Web... (completed in 31,4s)
+[        ] "flutter web" took 31.721ms.
+[  +47 ms] Error: Failed to compile 
+application for the Web.
+[        ] 
+           #0      throwToolExit (pa
+ckage:flutter_tools/src/base/common.
+dart:34:3)
+           #1      WebBuilder.buildW
+eb (package:flutter_tools/src/web/co
+mpile.dart:137:7)
+           <asynchronous suspension>
+           #2      BuildWebCommand.r
+unCommand (package:flutter_tools/src
+/commands/build_web.dart:296:5)
+           <asynchronous suspension>
+           #3      FlutterCommand.ru
+n.<anonymous closure> (package:flutt
+er_tools/src/runner/flutter_command.
+dart:1559:27)
+           <asynchronous suspension>
+           #4      AppContext.run.<a
+nonymous closure> (package:flutter_t
+ools/src/base/context.dart:154:19)
+           <asynchronous suspension>
+           #5      CommandRunner.run
+Command (package:args/command_runner
+.dart:212:13)
+           <asynchronous suspension>
+           #6      FlutterCommandRun
+ner.runCommand.<anonymous closure> (
+package:flutter_tools/src/runner/flu
+tter_command_runner.dart:487:9)
+           <asynchronous suspension>
+           #7      AppContext.run.<a
+nonymous closure> (package:flutter_t
+ools/src/base/context.dart:154:19)
+           <asynchronous suspension>
+           #8      FlutterCommandRun
+ner.runCommand (package:flutter_tool
+s/src/runner/flutter_command_runner.
+dart:422:5)
+           <asynchronous suspension>
+           #9      run.<anonymous cl
+osure>.<anonymous closure> (package:
+flutter_tools/runner.dart:104:11)
+           <asynchronous suspension>
+           #10     AppContext.run.<a
+nonymous closure> (package:flutter_t
+ools/src/base/context.dart:154:19)
+           <asynchronous suspension>
+           #11     main (package:flu
+tter_tools/executable.dart:103:3)
+           <asynchronous suspension>
+
+
+[        ] Running 1 shutdown hook
+[   +1 ms] Shutdown hooks complete
+[ +250 ms] exiting with code 1
