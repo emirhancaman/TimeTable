@@ -43,9 +43,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   void _showAddPlanSheet() {
     final provider = context.read<PlanProvider>();
-    showModalBottomSheet(
+    showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
+      useSafeArea: true,
+      constraints: const BoxConstraints(maxWidth: 640),
       backgroundColor: Colors.transparent,
       builder: (context) => AddPlanScreen(
         initialCategory: provider.selectedCategory,
@@ -55,9 +57,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   void _showEditPlanSheet(Plan plan) {
-    showModalBottomSheet(
+    showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
+      useSafeArea: true,
+      constraints: const BoxConstraints(maxWidth: 640),
       backgroundColor: Colors.transparent,
       builder: (context) => AddPlanScreen(planToEdit: plan),
     );
@@ -79,7 +83,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         content: Text(
           loc.get('delete_confirm'),
           style: TextStyle(
-            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+            color: Theme.of(
+              context,
+            ).colorScheme.onSurface.withValues(alpha: 0.6),
           ),
         ),
         actions: [
@@ -88,7 +94,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             child: Text(
               loc.get('cancel'),
               style: TextStyle(
-                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.4),
+                color: Theme.of(
+                  context,
+                ).colorScheme.onSurface.withValues(alpha: 0.4),
               ),
             ),
           ),
@@ -130,7 +138,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         content: Text(
           '${category.name} ${loc.get('delete_confirm')}',
           style: TextStyle(
-            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+            color: Theme.of(
+              context,
+            ).colorScheme.onSurface.withValues(alpha: 0.6),
           ),
         ),
         actions: [
@@ -177,13 +187,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 labelStyle: TextStyle(
                   color: Theme.of(
                     context,
-                  ).colorScheme.onSurface.withOpacity(0.5),
+                  ).colorScheme.onSurface.withValues(alpha: 0.5),
                 ),
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
                     color: Theme.of(
                       context,
-                    ).colorScheme.onSurface.withOpacity(0.2),
+                    ).colorScheme.onSurface.withValues(alpha: 0.2),
                   ),
                 ),
                 focusedBorder: UnderlineInputBorder(
@@ -240,7 +250,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         content: Text(
           '$subCategoryName: ${loc.get('delete_confirm')}',
           style: TextStyle(
-            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+            color: Theme.of(
+              context,
+            ).colorScheme.onSurface.withValues(alpha: 0.6),
           ),
         ),
         actions: [
@@ -285,11 +297,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           decoration: InputDecoration(
             labelText: loc.get('subcategory_name_label'),
             labelStyle: TextStyle(
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+              color: Theme.of(
+                context,
+              ).colorScheme.onSurface.withValues(alpha: 0.5),
             ),
             enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(
-                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.2),
+                color: Theme.of(
+                  context,
+                ).colorScheme.onSurface.withValues(alpha: 0.2),
               ),
             ),
             focusedBorder: UnderlineInputBorder(
@@ -352,11 +368,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             width: 100,
             height: 100,
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+              color: Theme.of(
+                context,
+              ).colorScheme.primary.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
-            child: const Center(
-              child: Text('📋', style: TextStyle(fontSize: 40)),
+            child: Center(
+              child: Icon(
+                Icons.event_note_rounded,
+                color: Theme.of(context).colorScheme.primary,
+                size: 40,
+              ),
             ),
           ),
           const SizedBox(height: 24),
@@ -373,7 +395,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             loc.get('empty_state_desc'),
             style: TextStyle(
               fontSize: 16,
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+              color: Theme.of(
+                context,
+              ).colorScheme.onSurface.withValues(alpha: 0.5),
             ),
           ),
           const SizedBox(height: 100),
@@ -387,293 +411,280 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     final loc = AppLocalizations.of(context);
 
     return Scaffold(
-      body: Container(
-        // Color removed to allow Theme scaffoldBackgroundColor to show
-        child: SafeArea(
-          child: Consumer<PlanProvider>(
-            builder: (context, planProvider, child) {
-              return AnimationLimiter(
-                child: CustomScrollView(
-                  slivers: [
-                    // App Bar
-                    SliverToBoxAdapter(
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 20, 20, 16),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  _getGreeting(context),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.onSurface.withOpacity(0.7),
-                                    fontWeight: FontWeight.w500,
+      body: SafeArea(
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 760),
+            child: Consumer<PlanProvider>(
+              builder: (context, planProvider, child) {
+                return AnimationLimiter(
+                  child: CustomScrollView(
+                    slivers: [
+                      // App Bar
+                      SliverToBoxAdapter(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 20, 20, 16),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    _getGreeting(context),
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurface
+                                          .withValues(alpha: 0.7),
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    () {
+                                      if (planProvider.selectedCategory ==
+                                          null) {
+                                        return loc.get('my_plans');
+                                      }
+                                      final catId =
+                                          planProvider.selectedCategory!;
+                                      final catKey =
+                                          'category_${catId.toLowerCase()}';
+                                      if (loc.get(catKey) != catKey) {
+                                        return loc.get(catKey);
+                                      }
+                                      return planProvider.getCategoryName(
+                                        catId,
+                                      );
+                                    }(),
+                                    style: TextStyle(
+                                      fontSize: 28,
+                                      fontWeight: FontWeight.bold,
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.onSurface,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              IconButton.filledTonal(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const SettingsScreen(),
+                                    ),
+                                  );
+                                },
+                                icon: const Icon(
+                                  Icons.settings_rounded,
+                                  size: 20,
                                 ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  () {
-                                    if (planProvider.selectedCategory == null) {
-                                      return loc.get('my_plans');
-                                    }
-                                    final catId =
-                                        planProvider.selectedCategory!;
-                                    final catKey =
-                                        'category_${catId.toLowerCase()}';
-                                    if (loc.get(catKey) != catKey) {
-                                      return loc.get(catKey);
-                                    }
-                                    return planProvider.getCategoryName(catId);
-                                  }(),
-                                  style: TextStyle(
-                                    fontSize: 28,
-                                    fontWeight: FontWeight.bold,
-                                    color: Theme.of(
+                                tooltip: loc.get('settings_title'),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      // Pinned Plans removed per user request
+                      // Focus Tracker
+                      const SliverToBoxAdapter(child: FocusTrackerCard()),
+                      // Category Filter
+                      SliverToBoxAdapter(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CategoryFilter(
+                                selectedCategory: planProvider.selectedCategory,
+                                onCategorySelected: planProvider.setCategory,
+                                categories: planProvider.categories,
+                                showAllCategory: false,
+                                onAddPressed: () =>
+                                    _showAddCategoryDialog(context),
+                                onCategoryDelete: (category) =>
+                                    _showDeleteCategoryDialog(
                                       context,
-                                    ).colorScheme.onSurface,
+                                      category,
+                                    ),
+                              ),
+                              if (planProvider.selectedCategory != null) ...[
+                                const SizedBox(height: 12),
+                                SizedBox(
+                                  height: 40,
+                                  child: ListView(
+                                    scrollDirection: Axis.horizontal,
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 20,
+                                    ),
+                                    children: [
+                                      // SubCategories
+                                      Builder(
+                                        builder: (context) {
+                                          try {
+                                            final category = planProvider
+                                                .categories
+                                                .firstWhere(
+                                                  (c) =>
+                                                      c.id ==
+                                                      planProvider
+                                                          .selectedCategory,
+                                                );
+                                            return Row(
+                                              children: [
+                                                ...category.subCategories.map((
+                                                  sub,
+                                                ) {
+                                                  final isSelected =
+                                                      planProvider
+                                                          .selectedSubCategory ==
+                                                      sub;
+                                                  return Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                          right: 8,
+                                                        ),
+                                                    child: GestureDetector(
+                                                      onLongPress: () =>
+                                                          _showDeleteSubCategoryDialog(
+                                                            context,
+                                                            category.id,
+                                                            sub,
+                                                          ),
+                                                      child: ChoiceChip(
+                                                        label: Text(sub),
+                                                        selected: isSelected,
+                                                        onSelected: (selected) {
+                                                          planProvider
+                                                              .setSubCategory(
+                                                                selected
+                                                                    ? sub
+                                                                    : null,
+                                                              );
+                                                        },
+                                                        backgroundColor:
+                                                            Theme.of(
+                                                                  context,
+                                                                ).brightness ==
+                                                                Brightness.dark
+                                                            ? AppTheme.darkCard
+                                                            : AppTheme
+                                                                  .lightCard,
+                                                        selectedColor:
+                                                            Theme.of(context)
+                                                                .colorScheme
+                                                                .primary
+                                                                .withValues(
+                                                                  alpha: 0.8,
+                                                                ),
+                                                        labelStyle: TextStyle(
+                                                          color: isSelected
+                                                              ? Colors.white
+                                                              : Theme.of(
+                                                                      context,
+                                                                    )
+                                                                    .colorScheme
+                                                                    .onSurface
+                                                                    .withValues(
+                                                                      alpha:
+                                                                          0.6,
+                                                                    ),
+                                                          fontSize: 13,
+                                                        ),
+                                                        shape: RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                20,
+                                                              ),
+                                                        ),
+                                                        side: BorderSide.none,
+                                                      ),
+                                                    ),
+                                                  );
+                                                }),
+                                                // Add SubCategory Button
+                                                ActionChip(
+                                                  label: Icon(
+                                                    Icons.add,
+                                                    size: 16,
+                                                    color: Theme.of(
+                                                      context,
+                                                    ).colorScheme.primary,
+                                                  ),
+                                                  backgroundColor:
+                                                      Theme.of(
+                                                            context,
+                                                          ).brightness ==
+                                                          Brightness.dark
+                                                      ? AppTheme.darkCard
+                                                      : AppTheme.lightCard,
+                                                  onPressed: () =>
+                                                      _showAddSubCategoryDialog(
+                                                        context,
+                                                        category.id,
+                                                      ),
+                                                  shape: const CircleBorder(),
+                                                  side: BorderSide.none,
+                                                  padding: EdgeInsets.zero,
+                                                ),
+                                              ],
+                                            );
+                                          } catch (e) {
+                                            return const SizedBox.shrink();
+                                          }
+                                        },
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
-                            ),
-                            // Settings Button
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const SettingsScreen(),
-                                  ),
-                                );
-                              },
-                              child: Container(
-                                width: 42,
-                                height: 42,
-                                decoration: BoxDecoration(
-                                  color:
-                                      Theme.of(context).brightness ==
-                                          Brightness.dark
-                                      ? AppTheme.darkCard
-                                      : AppTheme.lightCard,
-                                  borderRadius: BorderRadius.circular(14),
-                                  boxShadow:
-                                      Theme.of(context).brightness ==
-                                          Brightness.light
-                                      ? [
-                                          BoxShadow(
-                                            color: Colors.black.withOpacity(
-                                              0.05,
-                                            ),
-                                            blurRadius: 6,
-                                            offset: const Offset(0, 1),
-                                          ),
-                                        ]
-                                      : null,
-                                ),
-                                child: Icon(
-                                  Icons.settings_rounded,
-                                  color: Theme.of(
-                                    context,
-                                  ).colorScheme.onSurface.withOpacity(0.5),
-                                  size: 20,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    // Pinned Plans removed per user request
-                    // Focus Tracker
-                    const SliverToBoxAdapter(child: FocusTrackerCard()),
-                    // Category Filter
-                    SliverToBoxAdapter(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            CategoryFilter(
-                              selectedCategory: planProvider.selectedCategory,
-                              onCategorySelected: planProvider.setCategory,
-                              categories: planProvider.categories,
-                              showAllCategory: false,
-                              onAddPressed: () =>
-                                  _showAddCategoryDialog(context),
-                              onCategoryDelete: (category) =>
-                                  _showDeleteCategoryDialog(context, category),
-                            ),
-                            if (planProvider.selectedCategory != null) ...[
-                              const SizedBox(height: 12),
-                              SizedBox(
-                                height: 40,
-                                child: ListView(
-                                  scrollDirection: Axis.horizontal,
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 20,
-                                  ),
-                                  children: [
-                                    // SubCategories
-                                    Builder(
-                                      builder: (context) {
-                                        try {
-                                          final category = planProvider
-                                              .categories
-                                              .firstWhere(
-                                                (c) =>
-                                                    c.id ==
-                                                    planProvider
-                                                        .selectedCategory,
-                                              );
-                                          return Row(
-                                            children: [
-                                              ...category.subCategories.map((
-                                                sub,
-                                              ) {
-                                                final isSelected =
-                                                    planProvider
-                                                        .selectedSubCategory ==
-                                                    sub;
-                                                return Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                        right: 8,
-                                                      ),
-                                                  child: GestureDetector(
-                                                    onLongPress: () =>
-                                                        _showDeleteSubCategoryDialog(
-                                                          context,
-                                                          category.id,
-                                                          sub,
-                                                        ),
-                                                    child: ChoiceChip(
-                                                      label: Text(sub),
-                                                      selected: isSelected,
-                                                      onSelected: (selected) {
-                                                        planProvider
-                                                            .setSubCategory(
-                                                              selected
-                                                                  ? sub
-                                                                  : null,
-                                                            );
-                                                      },
-                                                      backgroundColor:
-                                                          Theme.of(
-                                                                context,
-                                                              ).brightness ==
-                                                              Brightness.dark
-                                                          ? AppTheme.darkCard
-                                                          : AppTheme.lightCard,
-                                                      selectedColor:
-                                                          Theme.of(context)
-                                                              .colorScheme
-                                                              .primary
-                                                              .withOpacity(0.8),
-                                                      labelStyle: TextStyle(
-                                                        color: isSelected
-                                                            ? Colors.white
-                                                            : Theme.of(context)
-                                                                  .colorScheme
-                                                                  .onSurface
-                                                                  .withOpacity(
-                                                                    0.6,
-                                                                  ),
-                                                        fontSize: 13,
-                                                      ),
-                                                      shape: RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                              20,
-                                                            ),
-                                                      ),
-                                                      side: BorderSide.none,
-                                                    ),
-                                                  ),
-                                                );
-                                              }),
-                                              // Add SubCategory Button
-                                              ActionChip(
-                                                label: Icon(
-                                                  Icons.add,
-                                                  size: 16,
-                                                  color: Theme.of(
-                                                    context,
-                                                  ).colorScheme.primary,
-                                                ),
-                                                backgroundColor:
-                                                    Theme.of(
-                                                          context,
-                                                        ).brightness ==
-                                                        Brightness.dark
-                                                    ? AppTheme.darkCard
-                                                    : AppTheme.lightCard,
-                                                onPressed: () =>
-                                                    _showAddSubCategoryDialog(
-                                                      context,
-                                                      category.id,
-                                                    ),
-                                                shape: const CircleBorder(),
-                                                side: BorderSide.none,
-                                                padding: EdgeInsets.zero,
-                                              ),
-                                            ],
-                                          );
-                                        } catch (e) {
-                                          return const SizedBox.shrink();
-                                        }
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
                             ],
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                    // Plans List
-                    if (planProvider.plans.isEmpty)
-                      SliverFillRemaining(child: _buildEmptyState())
-                    else
-                      SliverPadding(
-                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 100),
-                        sliver: SliverList(
-                          delegate: SliverChildBuilderDelegate((
-                            context,
-                            index,
-                          ) {
-                            final plan = planProvider.plans[index];
-                            return AnimationConfiguration.staggeredList(
-                              position: index,
-                              duration: const Duration(milliseconds: 375),
-                              child: SlideAnimation(
-                                verticalOffset: 50.0,
-                                child: FadeInAnimation(
-                                  child: PlanCard(
-                                    plan: plan,
-                                    onToggle: () => planProvider
-                                        .togglePlanCompletion(plan.id),
-                                    onDelete: () => _showDeleteConfirmation(
-                                      context,
-                                      plan.id,
+                      // Plans List
+                      if (planProvider.plans.isEmpty)
+                        SliverFillRemaining(child: _buildEmptyState())
+                      else
+                        SliverPadding(
+                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 100),
+                          sliver: SliverList(
+                            delegate: SliverChildBuilderDelegate((
+                              context,
+                              index,
+                            ) {
+                              final plan = planProvider.plans[index];
+                              return AnimationConfiguration.staggeredList(
+                                position: index,
+                                duration: const Duration(milliseconds: 375),
+                                child: SlideAnimation(
+                                  verticalOffset: 50.0,
+                                  child: FadeInAnimation(
+                                    child: PlanCard(
+                                      plan: plan,
+                                      onToggle: () => planProvider
+                                          .togglePlanCompletion(plan.id),
+                                      onDelete: () => _showDeleteConfirmation(
+                                        context,
+                                        plan.id,
+                                      ),
+                                      onTap: () => _showEditPlanSheet(plan),
                                     ),
-                                    onTap: () => _showEditPlanSheet(plan),
                                   ),
                                 ),
-                              ),
-                            );
-                          }, childCount: planProvider.plans.length),
+                              );
+                            }, childCount: planProvider.plans.length),
+                          ),
                         ),
-                      ),
-                  ],
-                ),
-              );
-            },
+                    ],
+                  ),
+                );
+              },
+            ),
           ),
         ),
       ),
@@ -682,31 +693,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         onExit: (_) => _fabController.reverse(),
         child: ScaleTransition(
           scale: _fabScaleAnimation,
-          child: Container(
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.primary,
-              borderRadius: BorderRadius.circular(AppTheme.radiusLarge),
-              boxShadow: [
-                BoxShadow(
-                  color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
-                  blurRadius: 12,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-            ),
-            child: FloatingActionButton.extended(
-              onPressed: _showAddPlanSheet,
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              highlightElevation: 0,
-              icon: const Icon(Icons.add_rounded, size: 24),
-              label: Text(
-                loc.get('new_plan'),
-                style: const TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
-                ),
-              ),
+          child: FloatingActionButton.extended(
+            onPressed: _showAddPlanSheet,
+            tooltip: loc.get('new_plan'),
+            icon: const Icon(Icons.add_rounded, size: 24),
+            label: Text(
+              loc.get('new_plan'),
+              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
             ),
           ),
         ),

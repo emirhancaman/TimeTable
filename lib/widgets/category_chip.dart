@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import '../models/category.dart';
 import '../theme/app_theme.dart';
+import '../utils/category_icon.dart';
 import '../utils/localization.dart';
 
 class CategoryChip extends StatelessWidget {
   final String label;
-  final String? emoji;
+  final IconData? icon;
   final bool isSelected;
   final VoidCallback onTap;
   final VoidCallback? onLongPress;
@@ -13,7 +14,7 @@ class CategoryChip extends StatelessWidget {
   const CategoryChip({
     super.key,
     required this.label,
-    this.emoji,
+    this.icon,
     required this.isSelected,
     required this.onTap,
     this.onLongPress,
@@ -40,14 +41,14 @@ class CategoryChip extends StatelessWidget {
               ? null
               : Border.all(
                   color: isDark
-                      ? Colors.white.withOpacity(0.06)
-                      : Colors.black.withOpacity(0.06),
+                      ? Colors.white.withValues(alpha: 0.06)
+                      : Colors.black.withValues(alpha: 0.06),
                   width: 1,
                 ),
           boxShadow: isSelected
               ? [
                   BoxShadow(
-                    color: AppTheme.primaryPurple.withOpacity(0.25),
+                    color: AppTheme.primaryNavy.withValues(alpha: 0.25),
                     blurRadius: 8,
                     offset: const Offset(0, 2),
                   ),
@@ -56,7 +57,7 @@ class CategoryChip extends StatelessWidget {
                     ? null
                     : [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.04),
+                          color: Colors.black.withValues(alpha: 0.04),
                           blurRadius: 4,
                           offset: const Offset(0, 1),
                         ),
@@ -65,8 +66,8 @@ class CategoryChip extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (emoji != null && emoji!.isNotEmpty) ...[
-              Text(emoji!, style: const TextStyle(fontSize: 14)),
+            if (icon != null) ...[
+              Icon(icon, size: 15, color: isSelected ? Colors.white : null),
               const SizedBox(width: 6),
             ],
             Text(
@@ -76,7 +77,9 @@ class CategoryChip extends StatelessWidget {
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
                 color: isSelected
                     ? Colors.white
-                    : Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                    : Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withValues(alpha: 0.7),
               ),
             ),
           ],
@@ -121,7 +124,7 @@ class CategoryFilter extends StatelessWidget {
               label: loc.get('category_all') == 'category_all'
                   ? 'Tümü'
                   : loc.get('category_all'),
-              emoji: '📋',
+              icon: Icons.view_agenda_outlined,
               isSelected: selectedCategory == null,
               onTap: () => onCategorySelected(null),
               onLongPress: onAllCategoryDelete,
@@ -138,7 +141,7 @@ class CategoryFilter extends StatelessWidget {
               padding: const EdgeInsets.only(right: 8),
               child: CategoryChip(
                 label: localizedName,
-                emoji: category.emoji,
+                icon: categoryIcon(category.id),
                 isSelected: selectedCategory == category.id,
                 onTap: () => onCategorySelected(category.id),
                 onLongPress: onCategoryDelete != null
@@ -152,7 +155,7 @@ class CategoryFilter extends StatelessWidget {
               padding: const EdgeInsets.only(right: 8),
               child: CategoryChip(
                 label: loc.get('add'),
-                emoji: '➕',
+                icon: Icons.add_rounded,
                 isSelected: false,
                 onTap: onAddPressed!,
               ),

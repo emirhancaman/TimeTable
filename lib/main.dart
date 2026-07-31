@@ -1,59 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'services/database_service.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:provider/provider.dart';
+
 import 'providers/plan_provider.dart';
 import 'providers/settings_provider.dart';
-import 'theme/app_theme.dart';
 import 'screens/home_screen.dart';
+import 'services/database_service.dart';
+import 'theme/app_theme.dart';
 import 'utils/localization.dart';
-import 'package:flutter_displaymode/flutter_displaymode.dart';
-import 'dart:io';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // Initialize date formatting for Turkish
-  await initializeDateFormatting('tr_TR', null);
-
-  // Initialize database
+  await initializeDateFormatting('tr_TR');
   await DatabaseService.initialize();
-
-  runApp(const MyApp());
+  runApp(const TimeTableApp());
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  @override
-  void initState() {
-    super.initState();
-    _setRefreshRate();
-  }
-
-  Future<void> _setRefreshRate() async {
-    if (Platform.isAndroid) {
-      try {
-        final modes = await FlutterDisplayMode.supported;
-        // Find a mode close to 60Hz
-        final mode = modes.firstWhere(
-          (m) => (m.refreshRate - 60).abs() < 2,
-          orElse: () => DisplayMode.auto,
-        );
-        if (mode != DisplayMode.auto) {
-          await FlutterDisplayMode.setPreferredMode(mode);
-        }
-      } catch (_) {
-        // Fail silently if not supported
-      }
-    }
-  }
+class TimeTableApp extends StatelessWidget {
+  const TimeTableApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -65,21 +30,22 @@ class _MyAppState extends State<MyApp> {
       child: Consumer<SettingsProvider>(
         builder: (context, settings, child) {
           return MaterialApp(
-            title: 'TimeEW',
+            title: 'TimeTable',
+            onGenerateTitle: (context) =>
+                AppLocalizations.of(context).get('app_name'),
             debugShowCheckedModeBanner: false,
-            // Localization
+            restorationScopeId: 'timetable',
             locale: settings.locale,
             localizationsDelegates: const [
               AppLocalizationsDelegate(),
               ...GlobalMaterialLocalizations.delegates,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
             ],
-            supportedLocales: const [Locale('en', 'US'), Locale('tr', 'TR')],
-            // Theme
+            supportedLocales: const [Locale('en'), Locale('tr')],
             themeMode: settings.themeMode,
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,
+            themeAnimationDuration: const Duration(milliseconds: 250),
+            themeAnimationCurve: Curves.easeOutCubic,
             home: const HomeScreen(),
           );
         },

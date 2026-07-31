@@ -1,204 +1,128 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../theme/app_theme.dart';
-import '../providers/settings_provider.dart';
 
-class SettingsScreen extends StatefulWidget {
+import '../providers/settings_provider.dart';
+import '../theme/app_theme.dart';
+import '../utils/localization.dart';
+
+class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
   @override
-  State<SettingsScreen> createState() => _SettingsScreenState();
-}
-
-class _SettingsScreenState extends State<SettingsScreen>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _animController;
-  late Animation<double> _fadeAnim;
-
-  @override
-  void initState() {
-    super.initState();
-    _animController = AnimationController(
-      duration: const Duration(milliseconds: 350),
-      vsync: this,
-    );
-    _fadeAnim = CurvedAnimation(parent: _animController, curve: Curves.easeOut);
-    _animController.forward();
-  }
-
-  @override
-  void dispose() {
-    _animController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final loc = AppLocalizations.of(context);
 
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: const Icon(Icons.arrow_back_rounded),
+          tooltip: MaterialLocalizations.of(context).backButtonTooltip,
+        ),
+        title: Text(loc.get('settings_title')),
+      ),
       body: SafeArea(
-        child: FadeTransition(
-          opacity: _fadeAnim,
-          child: Consumer<SettingsProvider>(
-            builder: (context, settings, child) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Back button
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
-                    child: GestureDetector(
-                      onTap: () => Navigator.pop(context),
-                      child: Icon(
-                        Icons.chevron_left_rounded,
-                        color: Theme.of(context).colorScheme.onSurface,
-                        size: 28,
-                      ),
-                    ),
-                  ),
-                  // Title
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
-                    child: Text(
-                      'Settings',
-                      style: TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.onSurface,
-                        letterSpacing: -0.5,
-                      ),
-                    ),
-                  ),
-                  // Settings list
-                  Expanded(
-                    child: ListView(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      children: [
-                        // Preferences section
-                        _buildSectionLabel(context, 'Preferences'),
-                        const SizedBox(height: 8),
-                        _buildGroupCard(
-                          context,
-                          isDark: isDark,
-                          children: [
-                            _buildSettingRow(
-                              context,
-                              icon: Icons.brightness_6_rounded,
-                              title: 'Theme',
-                              value: _getThemeName(settings.themeMode),
-                              onTap: () => _showThemeDialog(context, settings),
-                            ),
-                            _buildDivider(context),
-                            _buildSettingRow(
-                              context,
-                              icon: Icons.language_rounded,
-                              title: 'Language',
-                              value: settings.locale.languageCode == 'tr'
-                                  ? 'Türkçe'
-                                  : 'English',
-                              onTap: () =>
-                                  _showLanguageDialog(context, settings),
-                            ),
-                          ],
+        top: false,
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 680),
+            child: Consumer<SettingsProvider>(
+              builder: (context, settings, child) {
+                return ListView(
+                  padding: const EdgeInsets.fromLTRB(20, 16, 20, 32),
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 4, bottom: 10),
+                      child: Text(
+                        loc.get('preferences'),
+                        style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onSurface.withValues(alpha: 0.55),
+                          fontWeight: FontWeight.w700,
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                ],
-              );
-            },
+                    Card(
+                      child: Column(
+                        children: [
+                          _SettingsTile(
+                            icon: Icons.brightness_6_rounded,
+                            title: loc.get('theme_label'),
+                            value: _themeName(loc, settings.themeMode),
+                            onTap: () =>
+                                _showThemeDialog(context, settings, loc),
+                          ),
+                          const Divider(height: 1, indent: 68),
+                          _SettingsTile(
+                            icon: Icons.language_rounded,
+                            title: loc.get('language_label'),
+                            value: settings.locale.languageCode == 'tr'
+                                ? 'Türkçe'
+                                : 'English',
+                            onTap: () =>
+                                _showLanguageDialog(context, settings, loc),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    Center(
+                      child: Text(
+                        'TimeTable · v1.0.0',
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onSurface.withValues(alpha: 0.4),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget _buildSectionLabel(BuildContext context, String title) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 4, bottom: 4),
-      child: Text(
-        title,
-        style: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.w600,
-          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
-        ),
-      ),
-    );
+  String _themeName(AppLocalizations loc, ThemeMode mode) {
+    return switch (mode) {
+      ThemeMode.system => loc.get('theme_system'),
+      ThemeMode.light => loc.get('theme_light'),
+      ThemeMode.dark => loc.get('theme_dark'),
+    };
   }
 
-  Widget _buildGroupCard(
-    BuildContext context, {
-    required bool isDark,
-    required List<Widget> children,
-  }) {
-    return Container(
-      decoration: BoxDecoration(
-        color: isDark ? AppTheme.darkCard : AppTheme.lightCard,
-        borderRadius: BorderRadius.circular(AppTheme.radiusLarge),
-        boxShadow: isDark
-            ? null
-            : [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
-                  blurRadius: 8,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-      ),
-      child: Column(children: children),
-    );
-  }
-
-  Widget _buildSettingRow(
-    BuildContext context, {
-    required IconData icon,
-    required String title,
-    required String value,
-    required VoidCallback onTap,
-  }) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(AppTheme.radiusLarge),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-          child: Row(
+  void _showThemeDialog(
+    BuildContext context,
+    SettingsProvider settings,
+    AppLocalizations loc,
+  ) {
+    showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(loc.get('select_theme')),
+        content: RadioGroup<ThemeMode>(
+          groupValue: settings.themeMode,
+          onChanged: (value) {
+            if (value == null) return;
+            settings.setThemeMode(value);
+            Navigator.pop(context);
+          },
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(
-                icon,
-                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
-                size: 22,
+              _DialogRadio(
+                value: ThemeMode.system,
+                label: loc.get('theme_system'),
               ),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
-                    color: Theme.of(context).colorScheme.onSurface,
-                  ),
-                ),
+              _DialogRadio(
+                value: ThemeMode.light,
+                label: loc.get('theme_light'),
               ),
-              Text(
-                value,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Theme.of(
-                    context,
-                  ).colorScheme.onSurface.withOpacity(0.45),
-                ),
-              ),
-              const SizedBox(width: 4),
-              Icon(
-                Icons.chevron_right_rounded,
-                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
-                size: 20,
-              ),
+              _DialogRadio(value: ThemeMode.dark, label: loc.get('theme_dark')),
             ],
           ),
         ),
@@ -206,136 +130,98 @@ class _SettingsScreenState extends State<SettingsScreen>
     );
   }
 
-  Widget _buildDivider(BuildContext context) {
-    return Divider(
-      height: 1,
-      thickness: 0.5,
-      indent: 52,
-      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.08),
-    );
-  }
-
-  String _getThemeName(ThemeMode mode) {
-    switch (mode) {
-      case ThemeMode.system:
-        return 'System';
-      case ThemeMode.light:
-        return 'Light';
-      case ThemeMode.dark:
-        return 'Dark';
-    }
-  }
-
-  void _showThemeDialog(BuildContext context, SettingsProvider settings) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppTheme.radiusXLarge),
-        ),
-        title: Text(
-          'Tema Seç',
-          style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _buildDialogOption(
-              context,
-              'Sistem',
-              settings.themeMode == ThemeMode.system,
-              () {
-                settings.setThemeMode(ThemeMode.system);
-                Navigator.pop(context);
-              },
-            ),
-            _buildDialogOption(
-              context,
-              'Açık',
-              settings.themeMode == ThemeMode.light,
-              () {
-                settings.setThemeMode(ThemeMode.light);
-                Navigator.pop(context);
-              },
-            ),
-            _buildDialogOption(
-              context,
-              'Koyu',
-              settings.themeMode == ThemeMode.dark,
-              () {
-                settings.setThemeMode(ThemeMode.dark);
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  void _showLanguageDialog(BuildContext context, SettingsProvider settings) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppTheme.radiusXLarge),
-        ),
-        title: Text(
-          'Dil Seç',
-          style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _buildDialogOption(
-              context,
-              'Türkçe',
-              settings.locale.languageCode == 'tr',
-              () {
-                settings.setLocale(const Locale('tr'));
-                Navigator.pop(context);
-              },
-            ),
-            _buildDialogOption(
-              context,
-              'English',
-              settings.locale.languageCode == 'en',
-              () {
-                settings.setLocale(const Locale('en'));
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildDialogOption(
+  void _showLanguageDialog(
     BuildContext context,
-    String title,
-    bool isSelected,
-    VoidCallback onTap,
+    SettingsProvider settings,
+    AppLocalizations loc,
   ) {
-    return ListTile(
-      title: Text(
-        title,
-        style: TextStyle(
-          color: isSelected
-              ? Theme.of(context).colorScheme.primary
-              : Theme.of(context).colorScheme.onSurface,
-          fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+    showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(loc.get('select_language')),
+        content: RadioGroup<String>(
+          groupValue: settings.locale.languageCode,
+          onChanged: (value) {
+            if (value == null) return;
+            settings.setLocale(Locale(value));
+            Navigator.pop(context);
+          },
+          child: const Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _DialogRadio(value: 'tr', label: 'Türkçe'),
+              _DialogRadio(value: 'en', label: 'English'),
+            ],
+          ),
         ),
       ),
-      trailing: isSelected
-          ? Icon(
-              Icons.check_circle_rounded,
-              color: Theme.of(context).colorScheme.primary,
-            )
-          : null,
+    );
+  }
+}
+
+class _SettingsTile extends StatelessWidget {
+  const _SettingsTile({
+    required this.icon,
+    required this.title,
+    required this.value,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final String title;
+  final String value;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
       onTap: onTap,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+      leading: Container(
+        width: 38,
+        height: 38,
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
+          borderRadius: BorderRadius.circular(AppTheme.radiusMedium),
+        ),
+        child: Icon(
+          icon,
+          color: Theme.of(context).colorScheme.primary,
+          size: 20,
+        ),
+      ),
+      title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            value,
+            style: TextStyle(
+              color: Theme.of(
+                context,
+              ).colorScheme.onSurface.withValues(alpha: 0.55),
+            ),
+          ),
+          const SizedBox(width: 4),
+          const Icon(Icons.chevron_right_rounded, size: 20),
+        ],
+      ),
+    );
+  }
+}
+
+class _DialogRadio<T> extends StatelessWidget {
+  const _DialogRadio({required this.value, required this.label});
+
+  final T value;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return RadioListTile<T>(
+      value: value,
+      title: Text(label),
+      contentPadding: EdgeInsets.zero,
     );
   }
 }

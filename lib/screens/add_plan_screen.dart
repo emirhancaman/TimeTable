@@ -99,11 +99,12 @@ class _AddPlanScreenState extends State<AddPlanScreen>
   }
 
   Future<void> _savePlan() async {
+    final loc = AppLocalizations.of(context);
     if (_formKey.currentState!.validate()) {
       if (_selectedCategory == null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Lütfen bir kategori seçin')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(loc.get('category_required'))));
         return;
       }
 
@@ -120,7 +121,7 @@ class _AddPlanScreenState extends State<AddPlanScreen>
             subCategory: _selectedSubCategory,
             priority: _priority,
             dueDate: _dueDate,
-            emoji: '',
+            emoji: provider.getCategoryEmoji(_selectedCategory!),
             planType: PlanType.oneTime,
             repeatDays: null,
           );
@@ -135,7 +136,7 @@ class _AddPlanScreenState extends State<AddPlanScreen>
             subCategory: _selectedSubCategory,
             priority: _priority,
             dueDate: _dueDate,
-            emoji: '',
+            emoji: provider.getCategoryEmoji(_selectedCategory!),
             planType: PlanType.oneTime,
             repeatDays: null,
           );
@@ -145,7 +146,9 @@ class _AddPlanScreenState extends State<AddPlanScreen>
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(isEditing ? 'Plan güncellendi' : 'Plan eklendi'),
+            content: Text(
+              isEditing ? loc.get('plan_updated') : loc.get('plan_added'),
+            ),
             backgroundColor: AppTheme.successMint,
             behavior: SnackBarBehavior.floating,
             shape: RoundedRectangleBorder(
@@ -154,10 +157,11 @@ class _AddPlanScreenState extends State<AddPlanScreen>
           ),
         );
       } catch (e) {
+        debugPrint('Unable to save plan: $e');
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Hata oluştu: $e'),
+            content: Text(loc.get('save_error')),
             backgroundColor: AppTheme.errorRed,
             behavior: SnackBarBehavior.floating,
           ),
@@ -169,6 +173,10 @@ class _AddPlanScreenState extends State<AddPlanScreen>
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final loc = AppLocalizations.of(context);
+    final dateLocale = Localizations.localeOf(context).languageCode == 'tr'
+        ? 'tr_TR'
+        : 'en_US';
 
     return Container(
       height: MediaQuery.of(context).size.height * 0.9,
@@ -180,18 +188,6 @@ class _AddPlanScreenState extends State<AddPlanScreen>
         opacity: _fadeAnim,
         child: Column(
           children: [
-            // Handle bar
-            Container(
-              margin: const EdgeInsets.only(top: 12),
-              width: 36,
-              height: 4,
-              decoration: BoxDecoration(
-                color: Theme.of(
-                  context,
-                ).colorScheme.onSurface.withOpacity(0.15),
-                borderRadius: BorderRadius.circular(2),
-              ),
-            ),
             // Header
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 20, 12, 8),
@@ -199,7 +195,7 @@ class _AddPlanScreenState extends State<AddPlanScreen>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    isEditing ? 'Planı Düzenle' : 'New Plan',
+                    isEditing ? loc.get('edit_plan') : loc.get('new_plan'),
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
@@ -207,25 +203,12 @@ class _AddPlanScreenState extends State<AddPlanScreen>
                       letterSpacing: -0.3,
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () => Navigator.pop(context),
-                    child: Container(
-                      width: 36,
-                      height: 36,
-                      decoration: BoxDecoration(
-                        color: isDark
-                            ? AppTheme.darkCardLight
-                            : AppTheme.lightCardAlt,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Icon(
-                        Icons.close_rounded,
-                        color: Theme.of(
-                          context,
-                        ).colorScheme.onSurface.withOpacity(0.5),
-                        size: 18,
-                      ),
-                    ),
+                  IconButton.filledTonal(
+                    onPressed: () => Navigator.pop(context),
+                    icon: const Icon(Icons.close_rounded, size: 18),
+                    tooltip: MaterialLocalizations.of(
+                      context,
+                    ).closeButtonTooltip,
                   ),
                 ],
               ),
@@ -253,7 +236,7 @@ class _AddPlanScreenState extends State<AddPlanScreen>
                               ? null
                               : [
                                   BoxShadow(
-                                    color: Colors.black.withOpacity(0.05),
+                                    color: Colors.black.withValues(alpha: 0.05),
                                     blurRadius: 8,
                                     offset: const Offset(0, 2),
                                   ),
@@ -281,11 +264,12 @@ class _AddPlanScreenState extends State<AddPlanScreen>
                                   fontSize: 14,
                                 ),
                                 decoration: InputDecoration(
-                                  hintText: 'Title',
+                                  hintText: loc.get('plan_title'),
                                   hintStyle: TextStyle(
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.onSurface.withOpacity(0.35),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSurface
+                                        .withValues(alpha: 0.35),
                                   ),
                                   border: InputBorder.none,
                                   contentPadding: const EdgeInsets.symmetric(
@@ -295,7 +279,7 @@ class _AddPlanScreenState extends State<AddPlanScreen>
                                 ),
                                 validator: (value) {
                                   if (value == null || value.trim().isEmpty) {
-                                    return 'Lütfen bir başlık girin';
+                                    return loc.get('title_required');
                                   }
                                   return null;
                                 },
@@ -322,11 +306,12 @@ class _AddPlanScreenState extends State<AddPlanScreen>
                                 ),
                                 maxLines: 3,
                                 decoration: InputDecoration(
-                                  hintText: 'Description',
+                                  hintText: loc.get('description'),
                                   hintStyle: TextStyle(
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.onSurface.withOpacity(0.35),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSurface
+                                        .withValues(alpha: 0.35),
                                   ),
                                   border: InputBorder.none,
                                   contentPadding: const EdgeInsets.symmetric(
@@ -341,7 +326,7 @@ class _AddPlanScreenState extends State<AddPlanScreen>
                       ),
                       const SizedBox(height: 20),
                       // Category
-                      _buildSectionLabel('Category'),
+                      _buildSectionLabel(loc.get('category_label')),
                       const SizedBox(height: 10),
                       Consumer<PlanProvider>(
                         builder: (context, provider, child) {
@@ -392,14 +377,14 @@ class _AddPlanScreenState extends State<AddPlanScreen>
                                                 color: Theme.of(context)
                                                     .colorScheme
                                                     .onSurface
-                                                    .withOpacity(0.08),
+                                                    .withValues(alpha: 0.08),
                                               ),
                                         boxShadow: isDark
                                             ? null
                                             : [
                                                 BoxShadow(
                                                   color: Colors.black
-                                                      .withOpacity(0.04),
+                                                      .withValues(alpha: 0.04),
                                                   blurRadius: 4,
                                                   offset: const Offset(0, 1),
                                                 ),
@@ -415,7 +400,7 @@ class _AddPlanScreenState extends State<AddPlanScreen>
                                               : Theme.of(context)
                                                     .colorScheme
                                                     .onSurface
-                                                    .withOpacity(0.7),
+                                                    .withValues(alpha: 0.7),
                                         ),
                                       ),
                                     ),
@@ -439,7 +424,9 @@ class _AddPlanScreenState extends State<AddPlanScreen>
                                             CrossAxisAlignment.start,
                                         children: [
                                           const SizedBox(height: 16),
-                                          _buildSectionLabel('Alt Kategori'),
+                                          _buildSectionLabel(
+                                            loc.get('subcategory_label'),
+                                          ),
                                           const SizedBox(height: 10),
                                           Wrap(
                                             spacing: 8,
@@ -468,7 +455,9 @@ class _AddPlanScreenState extends State<AddPlanScreen>
                                                         ? Theme.of(context)
                                                               .colorScheme
                                                               .primary
-                                                              .withOpacity(0.8)
+                                                              .withValues(
+                                                                alpha: 0.8,
+                                                              )
                                                         : (isDark
                                                               ? AppTheme
                                                                     .darkCard
@@ -487,8 +476,9 @@ class _AddPlanScreenState extends State<AddPlanScreen>
                                                                     )
                                                                     .colorScheme
                                                                     .onSurface
-                                                                    .withOpacity(
-                                                                      0.08,
+                                                                    .withValues(
+                                                                      alpha:
+                                                                          0.08,
                                                                     ),
                                                           ),
                                                   ),
@@ -500,8 +490,8 @@ class _AddPlanScreenState extends State<AddPlanScreen>
                                                           : Theme.of(context)
                                                                 .colorScheme
                                                                 .onSurface
-                                                                .withOpacity(
-                                                                  0.6,
+                                                                .withValues(
+                                                                  alpha: 0.6,
                                                                 ),
                                                       fontSize: 12,
                                                     ),
@@ -523,13 +513,17 @@ class _AddPlanScreenState extends State<AddPlanScreen>
                       ),
                       const SizedBox(height: 20),
                       // Priority
-                      _buildSectionLabel('Priority'),
+                      _buildSectionLabel(loc.get('priority_label')),
                       const SizedBox(height: 10),
                       Row(
                         children: [1, 2, 3].map((priority) {
                           final isSelected = _priority == priority;
                           final color = AppTheme.getPriorityColor(priority);
-                          final label = AppTheme.getPriorityLabel(priority);
+                          final label = loc.get(switch (priority) {
+                            1 => 'priority_low',
+                            2 => 'priority_medium',
+                            _ => 'priority_high',
+                          });
                           return Expanded(
                             child: Padding(
                               padding: EdgeInsets.only(
@@ -545,7 +539,7 @@ class _AddPlanScreenState extends State<AddPlanScreen>
                                   ),
                                   decoration: BoxDecoration(
                                     color: isSelected
-                                        ? color.withOpacity(0.15)
+                                        ? color.withValues(alpha: 0.15)
                                         : (isDark
                                               ? AppTheme.darkCard
                                               : AppTheme.lightCard),
@@ -558,7 +552,7 @@ class _AddPlanScreenState extends State<AddPlanScreen>
                                           : Theme.of(context)
                                                 .colorScheme
                                                 .onSurface
-                                                .withOpacity(0.08),
+                                                .withValues(alpha: 0.08),
                                       width: isSelected ? 1.5 : 1,
                                     ),
                                   ),
@@ -573,7 +567,7 @@ class _AddPlanScreenState extends State<AddPlanScreen>
                                             : Theme.of(context)
                                                   .colorScheme
                                                   .onSurface
-                                                  .withOpacity(0.4),
+                                                  .withValues(alpha: 0.4),
                                       ),
                                     ),
                                   ),
@@ -585,7 +579,7 @@ class _AddPlanScreenState extends State<AddPlanScreen>
                       ),
                       const SizedBox(height: 20),
                       // Due Date
-                      _buildSectionLabel('Bitiş Tarihi (İsteğe bağlı)'),
+                      _buildSectionLabel(loc.get('due_date_optional')),
                       const SizedBox(height: 10),
                       GestureDetector(
                         onTap: _selectDate,
@@ -601,7 +595,7 @@ class _AddPlanScreenState extends State<AddPlanScreen>
                             border: Border.all(
                               color: Theme.of(
                                 context,
-                              ).colorScheme.onSurface.withOpacity(0.08),
+                              ).colorScheme.onSurface.withValues(alpha: 0.08),
                             ),
                           ),
                           child: Row(
@@ -610,9 +604,8 @@ class _AddPlanScreenState extends State<AddPlanScreen>
                                 Icons.calendar_today_rounded,
                                 color: _dueDate != null
                                     ? Theme.of(context).colorScheme.primary
-                                    : Theme.of(
-                                        context,
-                                      ).colorScheme.onSurface.withOpacity(0.35),
+                                    : Theme.of(context).colorScheme.onSurface
+                                          .withValues(alpha: 0.35),
                                 size: 18,
                               ),
                               const SizedBox(width: 10),
@@ -620,15 +613,15 @@ class _AddPlanScreenState extends State<AddPlanScreen>
                                 _dueDate != null
                                     ? DateFormat(
                                         'd MMMM yyyy',
-                                        'tr_TR',
+                                        dateLocale,
                                       ).format(_dueDate!)
-                                    : 'Tarih seçin',
+                                    : loc.get('select_date'),
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: _dueDate != null
                                       ? Theme.of(context).colorScheme.onSurface
                                       : Theme.of(context).colorScheme.onSurface
-                                            .withOpacity(0.35),
+                                            .withValues(alpha: 0.35),
                                 ),
                               ),
                             ],
@@ -648,34 +641,10 @@ class _AddPlanScreenState extends State<AddPlanScreen>
                 child: SizedBox(
                   width: double.infinity,
                   height: 52,
-                  child: GestureDetector(
-                    onTap: _savePlan,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primary,
-                        borderRadius: BorderRadius.circular(
-                          AppTheme.radiusMedium,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.primary.withOpacity(0.3),
-                            blurRadius: 12,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      child: Center(
-                        child: Text(
-                          isEditing ? 'Güncelle' : 'Add Plan',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
+                  child: ElevatedButton(
+                    onPressed: _savePlan,
+                    child: Text(
+                      isEditing ? loc.get('update') : loc.get('add_plan'),
                     ),
                   ),
                 ),
@@ -693,7 +662,7 @@ class _AddPlanScreenState extends State<AddPlanScreen>
       style: TextStyle(
         fontSize: 13,
         fontWeight: FontWeight.w600,
-        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+        color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5),
         letterSpacing: 0.3,
       ),
     );

@@ -5,6 +5,7 @@ import '../providers/plan_provider.dart';
 import 'package:intl/intl.dart';
 import '../models/plan.dart';
 import '../theme/app_theme.dart';
+import '../utils/category_icon.dart';
 
 class PlanCard extends StatefulWidget {
   final Plan plan;
@@ -96,29 +97,29 @@ class _PlanCardState extends State<PlanCard>
                         width: 3,
                       ),
                       top: BorderSide(
-                        color: AppTheme.successMint.withOpacity(0.15),
+                        color: AppTheme.successMint.withValues(alpha: 0.15),
                         width: 0.5,
                       ),
                       right: BorderSide(
-                        color: AppTheme.successMint.withOpacity(0.15),
+                        color: AppTheme.successMint.withValues(alpha: 0.15),
                         width: 0.5,
                       ),
                       bottom: BorderSide(
-                        color: AppTheme.successMint.withOpacity(0.15),
+                        color: AppTheme.successMint.withValues(alpha: 0.15),
                         width: 0.5,
                       ),
                     )
                   : (isDark
                         ? null
                         : Border.all(
-                            color: Colors.black.withOpacity(0.04),
+                            color: Colors.black.withValues(alpha: 0.04),
                             width: 1,
                           )),
               boxShadow: isDark
                   ? null
                   : [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.04),
+                        color: Colors.black.withValues(alpha: 0.04),
                         blurRadius: 6,
                         offset: const Offset(0, 1),
                       ),
@@ -148,7 +149,7 @@ class _PlanCardState extends State<PlanCard>
                           : Border.all(
                               color: Theme.of(
                                 context,
-                              ).colorScheme.onSurface.withOpacity(0.25),
+                              ).colorScheme.onSurface.withValues(alpha: 0.25),
                               width: 1.5,
                             ),
                     ),
@@ -169,13 +170,14 @@ class _PlanCardState extends State<PlanCard>
                     children: [
                       Row(
                         children: [
-                          if (plan.emoji.isNotEmpty) ...[
-                            Text(
-                              plan.emoji,
-                              style: const TextStyle(fontSize: 14),
-                            ),
-                            const SizedBox(width: 6),
-                          ],
+                          Icon(
+                            categoryIcon(plan.category),
+                            size: 15,
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.onSurface.withValues(alpha: 0.55),
+                          ),
+                          const SizedBox(width: 6),
                           Expanded(
                             child: Text(
                               plan.title,
@@ -183,9 +185,8 @@ class _PlanCardState extends State<PlanCard>
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
                                 color: plan.isCompleted
-                                    ? Theme.of(
-                                        context,
-                                      ).colorScheme.onSurface.withOpacity(0.4)
+                                    ? Theme.of(context).colorScheme.onSurface
+                                          .withValues(alpha: 0.4)
                                     : Theme.of(context).colorScheme.onSurface,
                               ),
                               maxLines: 1,
@@ -207,9 +208,8 @@ class _PlanCardState extends State<PlanCard>
                                     : Icons.star_border_rounded,
                                 color: plan.isFavorite
                                     ? AppTheme.warningYellow
-                                    : Theme.of(
-                                        context,
-                                      ).colorScheme.onSurface.withOpacity(0.2),
+                                    : Theme.of(context).colorScheme.onSurface
+                                          .withValues(alpha: 0.2),
                                 size: 18,
                               ),
                             ),
@@ -224,7 +224,9 @@ class _PlanCardState extends State<PlanCard>
                           style: TextStyle(
                             fontSize: 12,
                             color: Theme.of(context).colorScheme.onSurface
-                                .withOpacity(plan.isCompleted ? 0.3 : 0.5),
+                                .withValues(
+                                  alpha: plan.isCompleted ? 0.3 : 0.5,
+                                ),
                           ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
@@ -248,8 +250,8 @@ class _PlanCardState extends State<PlanCard>
                               }
                               return _buildTag(
                                 categoryLabel,
-                                AppTheme.primaryPurple.withOpacity(0.12),
-                                AppTheme.primaryPurpleLight,
+                                AppTheme.primaryNavy.withValues(alpha: 0.12),
+                                AppTheme.primaryBlue,
                               );
                             },
                           ),
@@ -259,7 +261,9 @@ class _PlanCardState extends State<PlanCard>
                             const SizedBox(width: 6),
                             _buildTag(
                               dateFormat.format(plan.dueDate!),
-                              _getDueDateColor(plan.dueDate!).withOpacity(0.12),
+                              _getDueDateColor(
+                                plan.dueDate!,
+                              ).withValues(alpha: 0.12),
                               _getDueDateColor(plan.dueDate!),
                             ),
                           ],
@@ -273,7 +277,7 @@ class _PlanCardState extends State<PlanCard>
                     Icons.chevron_right_rounded,
                     color: Theme.of(
                       context,
-                    ).colorScheme.onSurface.withOpacity(0.2),
+                    ).colorScheme.onSurface.withValues(alpha: 0.2),
                     size: 20,
                   ),
               ],
@@ -312,7 +316,7 @@ class _PlanCardState extends State<PlanCard>
           height: 10,
           margin: const EdgeInsets.only(right: 2),
           decoration: BoxDecoration(
-            color: index < priority ? color : color.withOpacity(0.2),
+            color: index < priority ? color : color.withValues(alpha: 0.2),
             borderRadius: BorderRadius.circular(2),
           ),
         );
@@ -328,7 +332,7 @@ class _PlanCardState extends State<PlanCard>
 
     if (difference < 0) return AppTheme.errorRed;
     if (difference == 0) return AppTheme.warningYellow;
-    if (difference <= 3) return AppTheme.accentCoral;
+    if (difference <= 3) return AppTheme.accentAmber;
     return AppTheme.textSecondary;
   }
 }

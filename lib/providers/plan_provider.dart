@@ -47,18 +47,18 @@ class PlanProvider extends ChangeNotifier {
     }
 
     _sortPlans();
-    HomeWidgetService.updateWidget(_plans);
+    await HomeWidgetService.updateWidget(_plans);
     notifyListeners();
   }
 
   Future<void> _seedDefaultCategories() async {
     final defaults = [
-      Category(id: 'work', name: 'İş', emoji: ''),
-      Category(id: 'personal', name: 'Kişisel', emoji: ''),
-      Category(id: 'health', name: 'Sağlık', emoji: ''),
-      Category(id: 'education', name: 'Eğitim', emoji: ''),
-      Category(id: 'shopping', name: 'Alışveriş', emoji: ''),
-      Category(id: 'other', name: 'Diğer', emoji: ''),
+      Category(id: 'work', name: 'İş', emoji: '💼'),
+      Category(id: 'personal', name: 'Kişisel', emoji: '👤'),
+      Category(id: 'health', name: 'Sağlık', emoji: '❤️'),
+      Category(id: 'education', name: 'Eğitim', emoji: '🎓'),
+      Category(id: 'shopping', name: 'Alışveriş', emoji: '🛒'),
+      Category(id: 'other', name: 'Diğer', emoji: '📌'),
     ];
     for (var cat in defaults) {
       await DatabaseService.addCategory(cat);
@@ -114,7 +114,7 @@ class PlanProvider extends ChangeNotifier {
     required String category,
     String? subCategory,
     int priority = 2,
-    String emoji = '',
+    String emoji = '📋',
     PlanType planType = PlanType.oneTime,
     List<int>? repeatDays,
   }) async {
@@ -140,7 +140,7 @@ class PlanProvider extends ChangeNotifier {
     _selectedSubCategory = subCategory;
 
     _sortPlans();
-    HomeWidgetService.updateWidget(_plans);
+    await HomeWidgetService.updateWidget(_plans);
     notifyListeners();
   }
 
@@ -150,7 +150,7 @@ class PlanProvider extends ChangeNotifier {
     if (index != -1) {
       _plans[index] = plan;
       _sortPlans();
-      HomeWidgetService.updateWidget(_plans);
+      await HomeWidgetService.updateWidget(_plans);
       notifyListeners();
     }
   }
@@ -158,7 +158,7 @@ class PlanProvider extends ChangeNotifier {
   Future<void> deletePlan(String id) async {
     await DatabaseService.deletePlan(id);
     _plans.removeWhere((p) => p.id == id);
-    HomeWidgetService.updateWidget(_plans);
+    await HomeWidgetService.updateWidget(_plans);
     notifyListeners();
   }
 
@@ -175,7 +175,19 @@ class PlanProvider extends ChangeNotifier {
   }
 
   Future<void> addCategory(String name, String emoji) async {
-    final category = Category(id: const Uuid().v4(), name: name, emoji: emoji);
+    final normalizedName = name.trim();
+    if (normalizedName.isEmpty) return;
+    if (_categories.any(
+      (category) => category.name.toLowerCase() == normalizedName.toLowerCase(),
+    )) {
+      return;
+    }
+
+    final category = Category(
+      id: const Uuid().v4(),
+      name: normalizedName,
+      emoji: emoji.trim().isEmpty ? '📁' : emoji.trim(),
+    );
     await DatabaseService.addCategory(category);
     _categories.add(category);
     notifyListeners();
@@ -185,7 +197,14 @@ class PlanProvider extends ChangeNotifier {
     final index = _categories.indexWhere((c) => c.id == categoryId);
     if (index != -1) {
       final category = _categories[index];
-      category.subCategories.add(subCategoryName);
+      final normalizedName = subCategoryName.trim();
+      if (normalizedName.isEmpty ||
+          category.subCategories.any(
+            (name) => name.toLowerCase() == normalizedName.toLowerCase(),
+          )) {
+        return;
+      }
+      category.subCategories.add(normalizedName);
       await category.save();
       notifyListeners();
     }
@@ -250,9 +269,7 @@ class PlanProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void refresh() {
-    _loadData();
-  }
+  Future<void> refresh() => _loadData();
 
   // Helper to get emoji
   String getCategoryEmoji(String categoryId) {
@@ -293,8 +310,8 @@ class PlanProvider extends ChangeNotifier {
   Map<String, dynamic> getFocusStats(String categoryId, String? subCategory) {
     // Get all plans matching category/subcategory
     final allRelevant = _plans.where((p) {
-      bool catMatch = p.category == categoryId;
-      bool subMatch = subCategory == null || p.subCategory == subCategory;
+      final catMatch = p.category == categoryId;
+      final subMatch = subCategory == null || p.subCategory == subCategory;
       return catMatch && subMatch;
     }).toList();
 

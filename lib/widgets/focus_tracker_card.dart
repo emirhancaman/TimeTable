@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/plan_provider.dart';
-import '../models/category.dart';
 import '../theme/app_theme.dart';
+import '../utils/category_icon.dart';
 import '../utils/localization.dart';
 
 class FocusTrackerCard extends StatefulWidget {
@@ -46,14 +46,14 @@ class _FocusTrackerCardState extends State<FocusTrackerCard> {
             color: isDark ? AppTheme.darkCard : AppTheme.lightCard,
             borderRadius: BorderRadius.circular(AppTheme.radiusXLarge),
             border: Border.all(
-              color: AppTheme.primaryPurple.withOpacity(0.1),
+              color: AppTheme.primaryNavy.withValues(alpha: 0.1),
               width: 1,
             ),
             boxShadow: isDark
                 ? null
                 : [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
+                      color: Colors.black.withValues(alpha: 0.05),
                       blurRadius: 8,
                       offset: const Offset(0, 2),
                     ),
@@ -62,6 +62,7 @@ class _FocusTrackerCardState extends State<FocusTrackerCard> {
           child: Material(
             color: Colors.transparent,
             child: InkWell(
+              onTap: () => _showFocusSelectionDialog(context, provider),
               onLongPress: () => _showFocusSelectionDialog(context, provider),
               borderRadius: BorderRadius.circular(AppTheme.radiusXLarge),
               child: Padding(
@@ -79,15 +80,18 @@ class _FocusTrackerCardState extends State<FocusTrackerCard> {
                                 width: 36,
                                 height: 36,
                                 decoration: BoxDecoration(
-                                  color: AppTheme.primaryPurple.withOpacity(
-                                    0.1,
+                                  color: AppTheme.primaryNavy.withValues(
+                                    alpha: 0.1,
                                   ),
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: Center(
-                                  child: Text(
-                                    provider.getCategoryEmoji(focusCategoryId),
-                                    style: const TextStyle(fontSize: 16),
+                                  child: Icon(
+                                    categoryIcon(focusCategoryId),
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.primary,
+                                    size: 18,
                                   ),
                                 ),
                               ),
@@ -112,7 +116,7 @@ class _FocusTrackerCardState extends State<FocusTrackerCard> {
                         Text(
                           '$completed/$total',
                           style: const TextStyle(
-                            color: AppTheme.primaryPurpleLight,
+                            color: AppTheme.primaryBlue,
                             fontWeight: FontWeight.bold,
                             fontSize: 13,
                           ),
@@ -127,8 +131,8 @@ class _FocusTrackerCardState extends State<FocusTrackerCard> {
                         backgroundColor: isDark
                             ? AppTheme.darkBackground
                             : AppTheme.lightCardAlt,
-                        valueColor: const AlwaysStoppedAnimation<Color>(
-                          AppTheme.primaryPurple,
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          Theme.of(context).colorScheme.primary,
                         ),
                         minHeight: 5,
                       ),
@@ -154,15 +158,15 @@ class _FocusTrackerCardState extends State<FocusTrackerCard> {
         borderRadius: BorderRadius.circular(AppTheme.radiusXLarge),
         border: Border.all(
           color: isDark
-              ? Colors.white.withOpacity(0.05)
-              : Colors.black.withOpacity(0.05),
+              ? Colors.white.withValues(alpha: 0.05)
+              : Colors.black.withValues(alpha: 0.05),
           width: 1,
         ),
         boxShadow: isDark
             ? null
             : [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.04),
+                  color: Colors.black.withValues(alpha: 0.04),
                   blurRadius: 6,
                   offset: const Offset(0, 1),
                 ),
@@ -183,7 +187,7 @@ class _FocusTrackerCardState extends State<FocusTrackerCard> {
                   Icons.center_focus_strong_rounded,
                   color: Theme.of(
                     context,
-                  ).colorScheme.onSurface.withOpacity(0.25),
+                  ).colorScheme.onSurface.withValues(alpha: 0.25),
                   size: 26,
                 ),
                 const SizedBox(height: 8),
@@ -192,7 +196,7 @@ class _FocusTrackerCardState extends State<FocusTrackerCard> {
                   style: TextStyle(
                     color: Theme.of(
                       context,
-                    ).colorScheme.onSurface.withOpacity(0.6),
+                    ).colorScheme.onSurface.withValues(alpha: 0.6),
                     fontWeight: FontWeight.w600,
                     fontSize: 13,
                   ),
@@ -203,7 +207,7 @@ class _FocusTrackerCardState extends State<FocusTrackerCard> {
                   style: TextStyle(
                     color: Theme.of(
                       context,
-                    ).colorScheme.onSurface.withOpacity(0.35),
+                    ).colorScheme.onSurface.withValues(alpha: 0.35),
                     fontSize: 11,
                   ),
                 ),
@@ -244,11 +248,11 @@ class _FocusTrackerCardState extends State<FocusTrackerCard> {
                         Navigator.pop(context);
                       },
                       icon: const Icon(Icons.close_rounded, size: 16),
-                      label: const Text('Odağı Kaldır'),
+                      label: Text(loc.get('remove_focus')),
                       style: OutlinedButton.styleFrom(
                         foregroundColor: AppTheme.errorRed,
                         side: BorderSide(
-                          color: AppTheme.errorRed.withOpacity(0.4),
+                          color: AppTheme.errorRed.withValues(alpha: 0.4),
                         ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
@@ -275,9 +279,10 @@ class _FocusTrackerCardState extends State<FocusTrackerCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ListTile(
-                          leading: Text(
-                            category.emoji,
-                            style: const TextStyle(fontSize: 16),
+                          leading: Icon(
+                            categoryIcon(category.id),
+                            color: Theme.of(context).colorScheme.primary,
+                            size: 20,
                           ),
                           title: Text(
                             catName,
@@ -301,7 +306,7 @@ class _FocusTrackerCardState extends State<FocusTrackerCard> {
                               style: TextStyle(
                                 color: Theme.of(
                                   context,
-                                ).colorScheme.onSurface.withOpacity(0.7),
+                                ).colorScheme.onSurface.withValues(alpha: 0.7),
                                 fontSize: 13,
                               ),
                             ),
@@ -316,7 +321,7 @@ class _FocusTrackerCardState extends State<FocusTrackerCard> {
                           Divider(
                             color: Theme.of(
                               context,
-                            ).colorScheme.onSurface.withOpacity(0.08),
+                            ).colorScheme.onSurface.withValues(alpha: 0.08),
                             height: 1,
                           ),
                       ],

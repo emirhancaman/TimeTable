@@ -12,9 +12,15 @@ class DatabaseService {
 
   static Future<void> initialize() async {
     await Hive.initFlutter();
-    Hive.registerAdapter(PlanAdapter());
-    Hive.registerAdapter(PlanTypeAdapter());
-    Hive.registerAdapter(CategoryAdapter());
+    if (!Hive.isAdapterRegistered(0)) {
+      Hive.registerAdapter(PlanAdapter());
+    }
+    if (!Hive.isAdapterRegistered(1)) {
+      Hive.registerAdapter(CategoryAdapter());
+    }
+    if (!Hive.isAdapterRegistered(2)) {
+      Hive.registerAdapter(PlanTypeAdapter());
+    }
     _planBox = await Hive.openBox<Plan>(_planBoxName);
     _categoryBox = await Hive.openBox<Category>(_categoryBoxName);
     _settingsBox = await Hive.openBox(_settingsBoxName);
