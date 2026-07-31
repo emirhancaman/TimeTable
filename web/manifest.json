@@ -1,11 +1,12 @@
 {
-    "name": "timetable_app",
-    "short_name": "timetable_app",
+    "name": "TimeTable — Focused Daily Planner",
+    "short_name": "TimeTable",
+    "description": "An offline-first planner for schedules, routines, and focus tracking.",
     "start_url": ".",
+    "scope": ".",
     "display": "standalone",
-    "background_color": "#hex_code",
-    "theme_color": "#hex_code",
-    "description": "A new Flutter project.",
+    "background_color": "#0B1020",
+    "theme_color": "#4F7CFF",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

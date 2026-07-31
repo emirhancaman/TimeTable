@@ -14,6 +14,8 @@ enum PlanType {
 
 @HiveType(typeId: 0)
 class Plan extends HiveObject {
+  static const Object _unset = Object();
+
   @HiveField(0)
   String id;
 
@@ -72,32 +74,38 @@ class Plan extends HiveObject {
   Plan copyWith({
     String? id,
     String? title,
-    String? description,
+    Object? description = _unset,
     DateTime? createdAt,
-    DateTime? dueDate,
+    Object? dueDate = _unset,
     bool? isCompleted,
     String? category,
-    String? subCategory,
+    Object? subCategory = _unset,
     int? priority,
     String? emoji,
     bool? isFavorite,
     PlanType? planType,
-    List<int>? repeatDays,
+    Object? repeatDays = _unset,
   }) {
     return Plan(
       id: id ?? this.id,
       title: title ?? this.title,
-      description: description ?? this.description,
+      description: identical(description, _unset)
+          ? this.description
+          : description as String?,
       createdAt: createdAt ?? this.createdAt,
-      dueDate: dueDate ?? this.dueDate,
+      dueDate: identical(dueDate, _unset) ? this.dueDate : dueDate as DateTime?,
       isCompleted: isCompleted ?? this.isCompleted,
       category: category ?? this.category,
-      subCategory: subCategory ?? this.subCategory,
+      subCategory: identical(subCategory, _unset)
+          ? this.subCategory
+          : subCategory as String?,
       priority: priority ?? this.priority,
       emoji: emoji ?? this.emoji,
       isFavorite: isFavorite ?? this.isFavorite,
       planType: planType ?? this.planType,
-      repeatDays: repeatDays ?? this.repeatDays,
+      repeatDays: identical(repeatDays, _unset)
+          ? this.repeatDays
+          : repeatDays as List<int>?,
     );
   }
 }

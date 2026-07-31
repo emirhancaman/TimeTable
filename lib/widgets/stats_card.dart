@@ -29,15 +29,15 @@ class StatsCard extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  AppTheme.primaryPurple.withOpacity(0.3),
-                  AppTheme.darkCard.withOpacity(0.8),
+                  AppTheme.primaryNavy.withValues(alpha: 0.3),
+                  AppTheme.darkCard.withValues(alpha: 0.8),
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
               borderRadius: BorderRadius.circular(AppTheme.radiusXLarge),
               border: Border.all(
-                color: AppTheme.primaryPurple.withOpacity(0.3),
+                color: AppTheme.primaryNavy.withValues(alpha: 0.3),
                 width: 1,
               ),
             ),
@@ -77,7 +77,7 @@ class StatsCard extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 24,
                                   fontWeight: FontWeight.w600,
-                                  color: AppTheme.primaryPurpleLight,
+                                  color: AppTheme.primaryBlue,
                                 ),
                               ),
                             ),
@@ -99,7 +99,7 @@ class StatsCard extends StatelessWidget {
                               strokeWidth: 8,
                               backgroundColor: AppTheme.darkCard,
                               valueColor: AlwaysStoppedAnimation(
-                                AppTheme.textMuted.withOpacity(0.2),
+                                AppTheme.textMuted.withValues(alpha: 0.2),
                               ),
                             ),
                           ),
@@ -140,7 +140,7 @@ class StatsCard extends StatelessWidget {
                     _buildStatItem(
                       'Toplam',
                       totalPlans.toString(),
-                      AppTheme.primaryPurpleLight,
+                      AppTheme.primaryBlue,
                     ),
                     _buildDivider(),
                     _buildStatItem(
@@ -152,7 +152,7 @@ class StatsCard extends StatelessWidget {
                     _buildStatItem(
                       'Bekleyen',
                       pendingPlans.toString(),
-                      AppTheme.accentCoral,
+                      AppTheme.accentAmber,
                     ),
                   ],
                 ),
@@ -190,7 +190,7 @@ class StatsCard extends StatelessWidget {
     return Container(
       width: 1,
       height: 40,
-      color: AppTheme.textMuted.withOpacity(0.2),
+      color: AppTheme.textMuted.withValues(alpha: 0.2),
     );
   }
 }

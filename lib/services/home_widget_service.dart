@@ -1,12 +1,14 @@
+import 'package:flutter/foundation.dart';
 import 'package:home_widget/home_widget.dart';
 import 'package:intl/intl.dart';
 import '../models/plan.dart';
 
 class HomeWidgetService {
-  static const String appGroupId = 'group.com.emirh.timetable_app';
   static const String androidWidgetName = 'HomeWidgetProvider';
 
   static Future<void> updateWidget(List<Plan> plans) async {
+    if (kIsWeb || defaultTargetPlatform != TargetPlatform.android) return;
+
     // Find next upcoming active plan
     final now = DateTime.now();
 
@@ -104,8 +106,8 @@ class HomeWidgetService {
       await HomeWidget.saveWidgetData<String>('message', message);
 
       await HomeWidget.updateWidget(name: androidWidgetName);
-    } catch (e) {
-      print('Error updating widget: $e');
+    } catch (error, stackTrace) {
+      debugPrint('Home widget update failed: $error\n$stackTrace');
     }
   }
 }

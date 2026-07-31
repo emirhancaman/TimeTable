@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../providers/plan_provider.dart';
 import '../models/plan.dart';
 import '../theme/app_theme.dart';
+import '../utils/category_icon.dart';
 import 'package:intl/intl.dart';
 import '../utils/localization.dart';
 
@@ -63,7 +64,7 @@ class _PinnedCard extends StatelessWidget {
         ).cardTheme.color, // Solid color, removed gradient
         borderRadius: BorderRadius.circular(AppTheme.radiusLarge),
         border: Border.all(
-          color: AppTheme.warningYellow.withOpacity(0.3),
+          color: AppTheme.warningYellow.withValues(alpha: 0.3),
           width: 1,
         ),
         // Shadow removed
@@ -83,11 +84,10 @@ class _PinnedCard extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // Emoji text (Plan emoji) is empty for new plans but might exist for old ones.
-                    // If empty, maybe show category emoji?
-                    // User removed emoji picker so plan.emoji might be empty.
-                    // If empty, show nothing or default?
-                    Text(plan.emoji, style: const TextStyle(fontSize: 24)),
+                    Icon(
+                      categoryIcon(plan.category),
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
                     InkWell(
                       onTap: () {
                         context.read<PlanProvider>().togglePlanFavorite(
@@ -98,7 +98,7 @@ class _PinnedCard extends StatelessWidget {
                       child: Container(
                         padding: const EdgeInsets.all(4),
                         decoration: BoxDecoration(
-                          color: AppTheme.warningYellow.withOpacity(0.1),
+                          color: AppTheme.warningYellow.withValues(alpha: 0.1),
                           shape: BoxShape.circle,
                         ),
                         child: const Icon(
@@ -138,7 +138,7 @@ class _PinnedCard extends StatelessWidget {
                         fontSize: 10,
                         color: Theme.of(
                           context,
-                        ).colorScheme.onSurface.withOpacity(0.7),
+                        ).colorScheme.onSurface.withValues(alpha: 0.7),
                       ),
                     ),
                   )
@@ -147,7 +147,7 @@ class _PinnedCard extends StatelessWidget {
                     AppLocalizations.of(context).get('no_date'),
                     style: TextStyle(
                       fontSize: 10,
-                      color: AppTheme.textMuted.withOpacity(0.5),
+                      color: AppTheme.textMuted.withValues(alpha: 0.5),
                     ),
                   ),
               ],

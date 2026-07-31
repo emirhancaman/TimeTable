@@ -16,12 +16,20 @@ class SettingsProvider extends ChangeNotifier {
     final box = DatabaseService.settingsBox;
 
     // Load Theme
-    final themeIndex = box.get('themeMode', defaultValue: 0) as int;
-    _themeMode = ThemeMode.values[themeIndex];
+    final storedThemeIndex = box.get('themeMode', defaultValue: 0);
+    if (storedThemeIndex is int &&
+        storedThemeIndex >= 0 &&
+        storedThemeIndex < ThemeMode.values.length) {
+      _themeMode = ThemeMode.values[storedThemeIndex];
+    }
 
     // Load Language
-    final langCode = box.get('languageCode', defaultValue: 'tr') as String;
-    _locale = Locale(langCode);
+    final storedLanguage = box.get('languageCode', defaultValue: 'tr');
+    final languageCode =
+        storedLanguage is String && const {'tr', 'en'}.contains(storedLanguage)
+        ? storedLanguage
+        : 'tr';
+    _locale = Locale(languageCode);
 
     notifyListeners();
   }
